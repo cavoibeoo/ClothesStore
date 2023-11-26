@@ -13,10 +13,10 @@ import java.util.Objects;
 public class OrdersEntity {
     private int orderId;
     private int customerId;
-    private int totalAmount;
+    private Double totalAmount;
     private Timestamp date;
     private byte status;
-    private BigDecimal discount;
+    private Double discount;
     private byte isCancel;
     private Timestamp dateComplete;
     private Byte isConfirmed;
@@ -43,11 +43,11 @@ public class OrdersEntity {
     
     @Basic
     @Column(name = "total_amount", nullable = false)
-    public int getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
     
-    public void setTotalAmount(int totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
     
@@ -73,11 +73,11 @@ public class OrdersEntity {
     
     @Basic
     @Column(name = "discount", nullable = false, precision = 2)
-    public BigDecimal getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
     
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
     

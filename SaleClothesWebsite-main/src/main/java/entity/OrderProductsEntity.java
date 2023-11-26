@@ -5,7 +5,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import org.hibernate.criterion.Order;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.lang.Double;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,9 +15,9 @@ import java.util.Objects;
 public class OrderProductsEntity {
     private int orderId;
     private int productId;
-    private BigDecimal unitPrice;
+    private Double unitPrice;
     private int quantity;
-    private BigDecimal total;
+    private Double total;
     private int sizeId;
     private int colorId;
     
@@ -43,11 +43,11 @@ public class OrderProductsEntity {
     
     @Basic
     @Column(name = "unit_price", nullable = false, precision = 2)
-    public BigDecimal getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
     
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
     
@@ -63,11 +63,11 @@ public class OrderProductsEntity {
     
     @Basic
     @Column(name = "total", nullable = false, precision = 2)
-    public BigDecimal getTotal() {
+    public Double getTotal() {
         return total;
     }
     
-    public void setTotal(BigDecimal total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
     

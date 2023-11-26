@@ -14,7 +14,7 @@ public class CustomeraccountEntity {
     private int customerId;
     private String mail;
     private String pwd;
-    private BigDecimal totalPayment;
+    private Double totalPayment;
     private int levelId;
     
     @Id
@@ -49,11 +49,11 @@ public class CustomeraccountEntity {
     
     @Basic
     @Column(name = "total_payment", nullable = false, precision = 2)
-    public BigDecimal getTotalPayment() {
+    public Double getTotalPayment() {
         return totalPayment;
     }
     
-    public void setTotalPayment(BigDecimal totalPayment) {
+    public void setTotalPayment(Double totalPayment) {
         this.totalPayment = totalPayment;
     }
     
@@ -116,5 +116,9 @@ public class CustomeraccountEntity {
         }catch (Exception exception) {
             return null;
         }
+    }
+    
+    public static CustomeraccountEntity findById(int id){
+        return JPAConfig.getEntityManager().find(CustomeraccountEntity.class, id);
     }
 }

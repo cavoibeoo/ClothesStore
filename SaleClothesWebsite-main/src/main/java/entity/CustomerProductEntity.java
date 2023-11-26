@@ -90,7 +90,7 @@ public class CustomerProductEntity {
         return Objects.hash(customerId, productId, quantity, status, sizeId, colorId);
     }
     
-    public int assignUnitPrice(){
+    public Double assignUnitPrice(){
         return ProductsEntity.findByID(this.productId).getUnitPrice();
     }
     

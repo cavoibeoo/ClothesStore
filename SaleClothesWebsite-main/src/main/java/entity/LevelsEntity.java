@@ -11,8 +11,8 @@ import java.util.logging.Level;
 @Table(name = "levels", schema = "clothesstore", catalog = "")
 public class LevelsEntity {
     private int levelId;
-    private BigDecimal discount;
-    private BigDecimal totalPayment;
+    private Double discount;
+    private Double totalPayment;
 
     @Id
     @Column(name = "level_id")
@@ -26,21 +26,21 @@ public class LevelsEntity {
 
     @Basic
     @Column(name = "discount")
-    public BigDecimal getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
     @Basic
     @Column(name = "total_payment")
-    public BigDecimal getTotalPayment() {
+    public Double getTotalPayment() {
         return totalPayment;
     }
 
-    public void setTotalPayment(BigDecimal totalPayment) {
+    public void setTotalPayment(Double totalPayment) {
         this.totalPayment = totalPayment;
     }
 

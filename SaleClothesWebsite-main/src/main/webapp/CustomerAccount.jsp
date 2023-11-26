@@ -1,9 +1,8 @@
 <%@ page import="java.util.List" %>
-<%@ page import="org.hibernate.criterion.Order" %>
-<%@ page import="com.sun.org.apache.xpath.internal.operations.Or" %>
-<%@ page import="java.math.BigDecimal" %>
 <%@ page import="entity.*" %>
-<%@ page import="java.util.ServiceLoader" %>
+<%@ page import="Controller.product.CartServlet" %>
+<%@ page import="Controller.Customer.AccountServlet" %>
+<%@ page import="Controller.product.OrderServlet" %>
 <%@ include file="includes/header.jsp" %>
 
 <!-- AccountInformation -->
@@ -36,7 +35,10 @@
                                         </tr>
                                         </thead>
 
-                                        <% List<OrdersEntity> customerOrders = (List<OrdersEntity>) session.getAttribute("customerOrders");
+                                        <% OrderServlet.getOrders(request, response);
+                                            AccountServlet.getAccount(request, response);
+                                            CustomeraccountEntity currAcc = (CustomeraccountEntity) session.getAttribute("user");
+                                            List<OrdersEntity> customerOrders = (List<OrdersEntity>) session.getAttribute("customerOrders");
                                         if (session.getAttribute("customerOrders")!= null){%>
 
                                             <% for (OrdersEntity order : customerOrders) { %>
@@ -148,8 +150,12 @@
                                                     else if (order.getStatus() == 2) tmpStatus = "Complete";
                                                 %>
                                                 <td class="column-3"> <%= tmpStatus %></td>
-                                                <%if (order.getIsCancel() == 0){%>
-                                                <td class="column-4"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#verticalycentered<%=order.getOrderId()%>">Cancel</button>
+
+                                                <td class="column-4">
+                                                    <%if (order.getIsCancel() == 0 && order.getStatus()!=2){%>
+                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#verticalycentered<%=order.getOrderId()%>">Cancel
+                                                    </button>
+                                                    <%}%>
                                                 <div class="modal fade" id="verticalycentered<%=order.getOrderId()%>" tabindex="-1" aria-hidden="true" style="display: none; position: fixed; top: 150px; left: 0; width: 100%; height: 80vh;">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
@@ -170,9 +176,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <%}%>
                                                 </td>
-
                                             </tr>
                                             <% } %>
                                             <% } %>
@@ -204,7 +208,7 @@
                 <div class="block-account">
                     <div class="block-title-account"><h5 style="color: #323c3f; font-size: 20px">My Account</h5></div>
                     <div class="block-content form-signup">
-                        <%CustomeraccountEntity currAcc = (CustomeraccountEntity) session.getAttribute("user");%>
+                        <%--<%CustomeraccountEntity currAcc = (CustomeraccountEntity) session.getAttribute("user");%>--%>
                         <%CustomerEntity currCustomer = CustomerEntity.findByID(currAcc.getCustomerId());%>
                         <p>Account Name: <strong style="color:#ad8610; line-height: 20px;"> <%=currCustomer.getFirstName() + " " + currCustomer.getLastName()%></strong></p>
                         <p><i class="fa fa-home font-some" aria-hidden="true"></i>  <span>Address: <%=currCustomer.getAddress()%></span></p>

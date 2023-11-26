@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ProductsEntity {
     private int productId;
     private String productName;
-    private int unitPrice;
+    private Double unitPrice;
     private int inventoryLeft;
     private int styleId;
     private int categoryId;
@@ -39,11 +39,11 @@ public class ProductsEntity {
     
     @Basic
     @Column(name = "unit_price")
-    public int getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
     
-    public void setUnitPrice(int unitPrice) {
+    public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
     

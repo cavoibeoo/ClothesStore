@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="JPAConfig.JPAConfig" %>
-<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.lang.Double" %>
 <%@ page import="java.util.logging.Level" %>
 <%@ page import="entity.*" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.nio.channels.AcceptPendingException" %>
+<%@ page import="Controller.Customer.AccountServlet" %>
 <link rel="stylesheet" type="text/css" href="css/orderdetails.css">
 <script src="js/vietnamlocalselector.js"></script>
 <script src="js/citycombobox.js"></script>
@@ -26,6 +29,7 @@
                         </li>
                     </ul>
                 </div>
+                <%AccountServlet.getAccount(request, response);%>
                 <div class="main-content">
                     <div class="step">
                         <div class="step-sections steps-onepage" step="1">
@@ -227,7 +231,10 @@
                                         <td class="total-line-name payment-due">
                                             <span class="payment-due-currency">USD</span>
                                             <span class="payment-due-price" data-checkout-payment-due-target="144400000">
-                                                <%BigDecimal discount = LevelsEntity.findByID(currAcc.getLevelId()).getDiscount().multiply(BigDecimal.valueOf(tempPrice));%>
+                                                <%Double discount = LevelsEntity.findByID(currAcc.getLevelId()).getDiscount() * tempPrice;
+                                                    DecimalFormat df = new DecimalFormat("#.##");
+                                                    discount = Double.parseDouble(df.format(discount));
+                                                %>
                                                 <%=discount%>
                                             </span>
                                         </td>
@@ -242,7 +249,7 @@
                                         <td class="total-line-name payment-due">
                                             <span class="payment-due-currency">USD</span>
                                             <span class="payment-due-price" data-checkout-payment-due-target="144400000">
-                                                <%=BigDecimal.valueOf(tempPrice).subtract(discount)%>
+                                                <%=tempPrice - discount%>
                                         </span>
                                         </td>
                                     </tr>

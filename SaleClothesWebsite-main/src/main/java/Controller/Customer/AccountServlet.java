@@ -4,6 +4,7 @@ import JPAConfig.JPAConfig;
 import entity.CustomerEntity;
 import entity.CustomeraccountEntity;
 import org.hibernate.Transaction;
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -63,5 +64,14 @@ public class AccountServlet extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
+    }
+    
+    public static void getAccount(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        CustomeraccountEntity currAcc = (CustomeraccountEntity) session.getAttribute("user");
+        CustomeraccountEntity updatedAcc = CustomeraccountEntity.findById(currAcc.getCustomerId());
+        
+        session.setAttribute("user",updatedAcc);
     }
 }

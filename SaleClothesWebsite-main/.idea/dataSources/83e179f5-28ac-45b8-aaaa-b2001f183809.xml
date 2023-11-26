@@ -1086,7 +1086,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <RoutineKind>procedure</RoutineKind>
     </routine>
     <routine id="315" parent="2" name="PROC_UpdateTotalAmount">
-      <SourceTextLength>283</SourceTextLength>
+      <SourceTextLength>275</SourceTextLength>
       <Definer>root@localhost</Definer>
       <RoutineKind>procedure</RoutineKind>
     </routine>
@@ -1286,9 +1286,9 @@ color_id</ColNames>
     </column>
     <column id="352" parent="306" name="total_payment">
       <Position>4</Position>
-      <DataType>decimal(10,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>0.00</DefaultExpression>
+      <DefaultExpression>0</DefaultExpression>
     </column>
     <column id="353" parent="306" name="level_id">
       <Position>5</Position>
@@ -1329,7 +1329,7 @@ color_id</ColNames>
       <RefColNames>level_id</RefColNames>
     </foreign-key>
     <trigger id="361" parent="306" name="TRIGG_UpdateLevelId">
-      <SourceTextLength>601</SourceTextLength>
+      <SourceTextLength>593</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Turn>before-row</Turn>
       <Events>U</Events>
@@ -1341,12 +1341,12 @@ color_id</ColNames>
     </column>
     <column id="363" parent="307" name="discount">
       <Position>2</Position>
-      <DataType>decimal(2,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="364" parent="307" name="total_payment">
       <Position>3</Position>
-      <DataType>decimal(10,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="365" parent="307" name="PRIMARY">
@@ -1366,9 +1366,9 @@ color_id</ColNames>
     </column>
     <column id="368" parent="308" name="unit_price">
       <Position>3</Position>
-      <DataType>decimal(10,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>0.00</DefaultExpression>
+      <DefaultExpression>0</DefaultExpression>
     </column>
     <column id="369" parent="308" name="quantity">
       <Position>4</Position>
@@ -1377,9 +1377,9 @@ color_id</ColNames>
     </column>
     <column id="370" parent="308" name="total">
       <Position>5</Position>
-      <DataType>decimal(10,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>0.00</DefaultExpression>
+      <DefaultExpression>0</DefaultExpression>
     </column>
     <column id="371" parent="308" name="size_id">
       <Position>6</Position>
@@ -1416,234 +1416,241 @@ color_id</ColNames>
       <RefTableName>products</RefTableName>
       <RefColNames>product_id</RefColNames>
     </foreign-key>
-    <trigger id="377" parent="308" name="TRIGG_UpdateTotalAmount">
+    <trigger id="377" parent="308" name="TRIGG_UpdateUnitPrice">
+      <SourceTextLength>155</SourceTextLength>
+      <Definer>root@localhost</Definer>
+      <Turn>before-row</Turn>
+      <Events>I</Events>
+    </trigger>
+    <trigger id="378" parent="308" name="TRIGG_UpdateTotalAmount">
       <SourceTextLength>53</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Turn>after-row</Turn>
       <Events>I</Events>
     </trigger>
-    <column id="378" parent="309" name="order_id">
+    <column id="379" parent="309" name="order_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="379" parent="309" name="customer_id">
+    <column id="380" parent="309" name="customer_id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="380" parent="309" name="total_amount">
+    <column id="381" parent="309" name="total_amount">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="381" parent="309" name="date">
+    <column id="382" parent="309" name="date">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="382" parent="309" name="status">
+    <column id="383" parent="309" name="status">
       <Position>5</Position>
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="383" parent="309" name="discount">
+    <column id="384" parent="309" name="discount">
       <Position>6</Position>
-      <DataType>decimal(2,2 digit)|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>0.00</DefaultExpression>
+      <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="384" parent="309" name="isCancel">
+    <column id="385" parent="309" name="isCancel">
       <Position>7</Position>
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="385" parent="309" name="dateComplete">
+    <column id="386" parent="309" name="dateComplete">
       <Position>8</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="386" parent="309" name="isConfirmed">
+    <column id="387" parent="309" name="isConfirmed">
       <Position>9</Position>
       <DataType>tinyint|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="387" parent="309" name="FK_orders_customer_idx">
+    <index id="388" parent="309" name="FK_orders_customer_idx">
       <ColNames>customer_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="388" parent="309" name="PRIMARY">
+    <key id="389" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="389" parent="309" name="FK_orders_customer">
+    <foreign-key id="390" parent="309" name="FK_orders_customer">
       <ColNames>customer_id</ColNames>
       <RefTableName>customer</RefTableName>
       <RefColNames>customer_id</RefColNames>
     </foreign-key>
-    <trigger id="390" parent="309" name="TRIGG_UpdateDiscount">
+    <trigger id="391" parent="309" name="TRIGG_UpdateDiscount">
       <SourceTextLength>226</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Turn>before-row</Turn>
       <Events>I</Events>
     </trigger>
-    <trigger id="391" parent="309" name="TRIGG_UpdateCompleteDate">
-      <SourceTextLength>540</SourceTextLength>
+    <trigger id="392" parent="309" name="TRIGG_UpdateCompleteDate">
+      <SourceTextLength>452</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Turn>before-row</Turn>
       <Events>U</Events>
     </trigger>
-    <trigger id="392" parent="309" name="TRIGG_TotalPayment">
+    <trigger id="393" parent="309" name="TRIGG_TotalPayment">
       <SourceTextLength>193</SourceTextLength>
       <Definer>root@localhost</Definer>
       <Turn>after-row</Turn>
       <Events>U</Events>
     </trigger>
-    <column id="393" parent="310" name="product_id">
+    <column id="394" parent="310" name="product_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="394" parent="310" name="product_name">
+    <column id="395" parent="310" name="product_name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="395" parent="310" name="unit_price">
+    <column id="396" parent="310" name="unit_price">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
+      <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="396" parent="310" name="inventory_left">
+    <column id="397" parent="310" name="inventory_left">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="397" parent="310" name="style_id">
+    <column id="398" parent="310" name="style_id">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="398" parent="310" name="category_id">
+    <column id="399" parent="310" name="category_id">
       <Position>6</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="399" parent="310" name="productDetail">
+    <column id="400" parent="310" name="productDetail">
       <Position>7</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="400" parent="310" name="isActivated">
+    <column id="401" parent="310" name="isActivated">
       <Position>8</Position>
       <DataType>bit(1)|0s</DataType>
       <DefaultExpression>b&apos;1&apos;</DefaultExpression>
     </column>
-    <index id="401" parent="310" name="product_id_UNIQUE">
+    <index id="402" parent="310" name="product_id_UNIQUE">
       <ColNames>product_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="402" parent="310" name="FK_products_style">
+    <index id="403" parent="310" name="FK_products_style">
       <ColNames>style_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="403" parent="310" name="FK_products_category">
+    <index id="404" parent="310" name="FK_products_category">
       <ColNames>category_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="404" parent="310" name="PRIMARY">
+    <key id="405" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>product_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="405" parent="310" name="product_id_UNIQUE">
+    <key id="406" parent="310" name="product_id_UNIQUE">
       <ColNames>product_id</ColNames>
       <UnderlyingIndexName>product_id_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="406" parent="310" name="FK_products_style">
+    <foreign-key id="407" parent="310" name="FK_products_style">
       <ColNames>style_id</ColNames>
       <RefTableName>style</RefTableName>
       <RefColNames>style_id</RefColNames>
     </foreign-key>
-    <foreign-key id="407" parent="310" name="FK_products_category">
+    <foreign-key id="408" parent="310" name="FK_products_category">
       <ColNames>category_id</ColNames>
       <RefTableName>category</RefTableName>
       <RefColNames>category_id</RefColNames>
     </foreign-key>
-    <column id="408" parent="311" name="size_id">
+    <column id="409" parent="311" name="size_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="409" parent="311" name="size_name">
+    <column id="410" parent="311" name="size_name">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <key id="410" parent="311" name="PRIMARY">
+    <key id="411" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>size_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="411" parent="312" name="size_id">
+    <column id="412" parent="312" name="size_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="412" parent="312" name="product_id">
+    <column id="413" parent="312" name="product_id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="413" parent="312" name="fk_sizeproduct_product_idx">
+    <index id="414" parent="312" name="fk_sizeproduct_product_idx">
       <ColNames>product_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="414" parent="312" name="PRIMARY">
+    <key id="415" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>size_id
 product_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="415" parent="312" name="fk_sizeproduct_size">
+    <foreign-key id="416" parent="312" name="fk_sizeproduct_size">
       <ColNames>size_id</ColNames>
       <RefTableName>size</RefTableName>
       <RefColNames>size_id</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="416" parent="312" name="fk_sizeproduct_product">
+    <foreign-key id="417" parent="312" name="fk_sizeproduct_product">
       <ColNames>product_id</ColNames>
       <RefTableName>products</RefTableName>
       <RefColNames>product_id</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="417" parent="313" name="style_id">
+    <column id="418" parent="313" name="style_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="418" parent="313" name="style_name">
+    <column id="419" parent="313" name="style_name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="419" parent="313" name="PRIMARY">
+    <key id="420" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>style_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <argument id="420" parent="314" name="in_customer_id">
+    <argument id="421" parent="314" name="in_customer_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>
-    <argument id="421" parent="315" name="in_order_id">
+    <argument id="422" parent="315" name="in_order_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
     </argument>

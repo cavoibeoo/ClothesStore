@@ -162,7 +162,7 @@ public class LoginServlet extends HttpServlet {
         try{
             transaction.begin();
             CustomeraccountEntity cus1 = new CustomeraccountEntity();
-            BigDecimal bd = new BigDecimal(0.00);
+            Double bd = new Double(0.00);
             cus1.setMail(registusername);
             cus1.setPwd(registpassword);
             cus1.setTotalPayment(bd);

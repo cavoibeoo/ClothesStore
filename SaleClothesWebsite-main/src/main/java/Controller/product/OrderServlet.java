@@ -134,7 +134,14 @@ public class OrderServlet extends HttpServlet {
             entityManager.merge(orders);
             transaction.commit();
         }
-        
+        List<OrderProductsEntity> orderedProducts = OrderProductsEntity.getOrderProductById(orders.getOrderId());
+        for (OrderProductsEntity orderedProduct : orderedProducts){
+            ProductsEntity fixedProduct = ProductsEntity.findByID(orderedProduct .getProductId());
+            fixedProduct.setInventoryLeft(fixedProduct.getInventoryLeft() + orderedProduct.getQuantity());
+            transaction.begin();
+            entityManager.merge(fixedProduct);
+            transaction.commit();
+        }
     }
     @Override
     protected void doGet(HttpServletRequest request,

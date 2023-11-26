@@ -100,7 +100,7 @@
 									Proceed Order
 								</div>
 							</button>
-							<a href="order?action=checkOrder">Proceed Order</a>
+							<%--<a href="order?action=checkOrder">Proceed Order</a>--%>
 						</div>
 					</div>
 				</div>
