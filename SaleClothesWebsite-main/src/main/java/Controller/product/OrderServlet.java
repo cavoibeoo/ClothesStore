@@ -2,6 +2,7 @@ package Controller.product;
 
 import JPAConfig.JPAConfig;
 import entity.*;
+import org.hibernate.criterion.Order;
 
 import javax.persistence.*;
 import javax.servlet.ServletException;
@@ -118,10 +119,21 @@ public class OrderServlet extends HttpServlet {
         query.setParameter("param1", user.getCustomerId());
         query.executeUpdate();
         transaction.commit();
+        CartServlet.doPost_GetCart(req,resp);
     }
     
     protected void cancelOrder(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException{
+        HttpSession session = req.getSession();
+        OrdersEntity orders = OrdersEntity.findByID(Integer.parseInt(req.getParameter("orderId")));
+        
+        if (orders != null){
+            Byte tmp = 1;
+            orders.setIsCancel(tmp);
+            transaction.begin();
+            entityManager.merge(orders);
+            transaction.commit();
+        }
         
     }
     @Override

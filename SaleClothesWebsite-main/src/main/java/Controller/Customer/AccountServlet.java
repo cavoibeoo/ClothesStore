@@ -48,7 +48,7 @@ public class AccountServlet extends HttpServlet {
                 customer.setFirstName(firstName);
                 customer.setLastName(lastName);
                 customer.setPhoneNumber(phonenumber);
-                customer.setAddress(address[2]+address[1]+address[0]);
+                customer.setAddress(address[3]+", "+address[2]+", " + address[1]+", " +address[0]);
     
                 EntityManager entityManager = JPAConfig.getEntityManager();
                 entityManager.getTransaction().begin();

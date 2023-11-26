@@ -3,6 +3,7 @@
 <%@ page import="com.sun.org.apache.xpath.internal.operations.Or" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="entity.*" %>
+<%@ page import="java.util.ServiceLoader" %>
 <%@ include file="includes/header.jsp" %>
 
 <!-- AccountInformation -->
@@ -16,7 +17,7 @@
                     </h1>
                 </div>
                 <div class="form-signup name-account m992">
-                    <p><strong>Anhonn, <a href="/account/addresses" style="color:#ad8610;">Quang Tran</a>&nbsp;!</strong></p>
+                    <p><strong>Anhonn, <a href="#" style="color:#ad8610;">Quang Tran</a>&nbsp;!</strong></p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
                     <div class="my-account">
@@ -27,30 +28,27 @@
                                         <thead class="thead-default">
                                         <tr class="table_head">
                                             <th class="column-0">Order</th>
-                                            <th class="column-1">Date</th>
+                                            <th class="column-1">Order Date</th>
+                                            <th class="column-1.5">Complete Date</th>
                                             <th class="column-2">Order Price</th>
-                                            <th class="column-3">Payment status</th>
+                                            <th class="column-3">Status</th>
                                             <th class="column-4"></th>
                                         </tr>
                                         </thead>
 
                                         <% List<OrdersEntity> customerOrders = (List<OrdersEntity>) session.getAttribute("customerOrders");
-                                            OrdersEntity currenOrder = new OrdersEntity();
                                         if (session.getAttribute("customerOrders")!= null){%>
 
                                             <% for (OrdersEntity order : customerOrders) { %>
                                             <tr class="table_row">
                                                 <td class="column-0">
                                                         <input type="hidden" name="requestedOrder" value="<%=order.getOrderId()%>">
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#largeModal" style="color: #9a6e3a" name="getOrderBtn">
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#largeModal<%=order.getOrderId()%>" style="color: #9a6e3a" name="getOrderBtn" value="<%=order.getOrderId()%>">
                                                             <%=order.getOrderId()%>
                                                         </button>
-                                                        <% if (request.getParameter("getOrderBtn") != null) {
-                                                        currenOrder = OrdersEntity.findByID(Integer.parseInt(request.getParameter("requestedOrder")));}
-                                                        %>
 
 <%--                                                    Edit Order in POPUP--%>
-                                                    <div class="modal fade" id="largeModal" tabindex="-1" aria-hidden="true" style="display: none; position: fixed; top: 90px; left: 0; width: 100%; height: 80vh;">
+                                                    <div class="modal fade" id="largeModal<%=order.getOrderId()%>" tabindex="-1" aria-hidden="true" style="display: none; position: fixed; top: 90px; left: 0; width: 100%; height: 80vh;">
                                                         <div class="modal-dialog modal-lg " style="min-height: 100vh; width: 50%;">
                                                             <div class="modal-content" style="background-color: #f0f0f0fa">
                                                                 <div class="letterhead"></div>
@@ -61,7 +59,6 @@
                                                                 <div class="modal-body">
                                                                     <form>
                                                                         <div class="mb-3">
-
                                                                             <label style="font-size: larger"><box-icon type='solid' name='location-plus'></box-icon>Address:</label>
                                                                             <%CustomeraccountEntity account = (CustomeraccountEntity) session.getAttribute("user");%>
                                                                             <%CustomerEntity customer = CustomerEntity.findByID(account.getCustomerId());%>
@@ -70,7 +67,11 @@
                                                                             <label><%=customer.getAddress()%></label>
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label style="font-weight: 700;color: #222;">Date: <%=currenOrder.getDate()%> </label>
+                                                                            <label style="font-weight: 700;color: #222;">Date: <%=order.getDate()%> </label>
+                                                                            <%String completeDate = "Not Completed";
+                                                                            if (order.getDateComplete() != null) completeDate = order.getDateComplete().toString();
+                                                                            %>
+                                                                            <label style="font-weight: 700;color: #222;">Date: <%=completeDate%> </label>
                                                                                 <div class="col-md-12 col-sm-12 col-xs-12 content-page customer-table-wrap detail-table-order">
                                                                                 <div class="customer-table-bg">
                                                                                     <p classs="title-detail">Order details	</p>
@@ -84,14 +85,20 @@
                                                                                                 <th class="total text-right">Total</th>
                                                                                             </tr>
 
-                                                                                            <%List<OrderProductsEntity> products = OrderProductsEntity.getOrderProductById(currenOrder.getOrderId());
+                                                                                            <%List<OrderProductsEntity> products = OrderProductsEntity.getOrderProductById(order.getOrderId());
                                                                                             for (OrderProductsEntity productOrder:products){
+
                                                                                             ProductsEntity product = ProductsEntity.findByID(productOrder.getProductId());
                                                                                             %>
 
                                                                                             <tr height="40px" id="1196577302" class="odd">
                                                                                                 <td class="" style="max-width:300px">
-                                                                                                    <a href="productDetail?id=2" title=""><%=product.getProductName()%></a> <br>
+                                                                                                    <a href="productDetail?id=<%=product.getProductId()%>" title="">
+                                                                                                        <img src="images/item_cart/item-cart-0<%=product.getProductId()%>.jpg" alt="IMG">
+                                                                                                    </a>
+                                                                                                    <br>
+                                                                                                    <%=product.getProductName()%>
+                                                                                                    <br>
                                                                                                     <span class="variant_acc"><%="Size: " + productOrder.getSizeId() + "/Color: " + productOrder.getColorId() %></span>
 
                                                                                                 </td>
@@ -104,12 +111,12 @@
 
                                                                                             <tr height="40px" class="order_summary">
                                                                                                 <td class="text-right" colspan="4"><b>Discount</b></td>
-                                                                                                <td class="total money text-right"><b><%=currenOrder.getDiscount()%></b></td>
+                                                                                                <td class="total money text-right"><b><%=order.getDiscount()%></b></td>
                                                                                             </tr>
 
                                                                                             <tr height="40px" class="order_summary order_total">
                                                                                                 <td class="text-right" colspan="4"><b>Total Price</b></td>
-                                                                                                <td class="total money text-right"><b><%=currenOrder.getTotalAmount()%></b></td>
+                                                                                                <td class="total money text-right"><b><%=order.getTotalAmount()%></b></td>
                                                                                             </tr>
                                                                                             </tbody></table>
                                                                                     </div>
@@ -130,10 +137,20 @@
                                                 <td class="column-1">
                                                     <%=order.getDate()%>
                                                 </td>
+                                                <td class="column-1.5">
+                                                    <%=completeDate%>
+                                                </td>
                                                 <td class="column-2"><%= order.getTotalAmount() %></td>
-                                                <td class="column-3"> <%= order.getStatus() %></td>
-                                                <td class="column-4"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#verticalycentered">Cancel</button>
-                                                <div class="modal fade" id="verticalycentered" tabindex="-1" aria-hidden="true" style="display: none; position: fixed; top: 150px; left: 0; width: 100%; height: 80vh;">
+                                                <%
+                                                    String tmpStatus = "Not confirmed";
+                                                    if (order.getIsCancel() == 1) tmpStatus = "Canceled";
+                                                    else if (order.getStatus() == 1) tmpStatus = "Shipping";
+                                                    else if (order.getStatus() == 2) tmpStatus = "Complete";
+                                                %>
+                                                <td class="column-3"> <%= tmpStatus %></td>
+                                                <%if (order.getIsCancel() == 0){%>
+                                                <td class="column-4"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#verticalycentered<%=order.getOrderId()%>">Cancel</button>
+                                                <div class="modal fade" id="verticalycentered<%=order.getOrderId()%>" tabindex="-1" aria-hidden="true" style="display: none; position: fixed; top: 150px; left: 0; width: 100%; height: 80vh;">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -145,11 +162,15 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Yes, Cancel this order</button>
+                                                                <a href="order?action=cancel&orderId=<%=order.getOrderId()%>">
+                                                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Yes, Cancel this order</button>
+                                                                </a>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <%}%>
                                                 </td>
 
                                             </tr>
@@ -185,7 +206,7 @@
                     <div class="block-content form-signup">
                         <%CustomeraccountEntity currAcc = (CustomeraccountEntity) session.getAttribute("user");%>
                         <%CustomerEntity currCustomer = CustomerEntity.findByID(currAcc.getCustomerId());%>
-                        <p>Account Name: <strong style="color:#ad8610; line-height: 20px;"> <%=currCustomer.getFirstName() + currCustomer.getLastName()%></strong></p>
+                        <p>Account Name: <strong style="color:#ad8610; line-height: 20px;"> <%=currCustomer.getFirstName() + " " + currCustomer.getLastName()%></strong></p>
                         <p><i class="fa fa-home font-some" aria-hidden="true"></i>  <span>Address: <%=currCustomer.getAddress()%></span></p>
                         <p><i class="fa fa-mobile font-some" aria-hidden="true"></i> <span>Phone numbers: <%=currCustomer.getPhoneNumber()%></span> </p>
 

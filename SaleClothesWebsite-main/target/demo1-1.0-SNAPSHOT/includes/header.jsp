@@ -84,7 +84,14 @@
                     <div class="wrap-icon-header flex-w flex-r-m h-full">
 
                         <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
-                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+                            <%
+                                int itemCount = 0;
+                                if (session.getAttribute("user")!=null) {
+                                    List<CustomerProductEntity> products = (List<CustomerProductEntity>) session.getAttribute("cart");
+                                    itemCount = products.size();
+                                }
+                            %>
+                            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="<%=itemCount%>">
                                 <i class="zmdi zmdi-shopping-cart"></i>
                             </div>
                         </div>

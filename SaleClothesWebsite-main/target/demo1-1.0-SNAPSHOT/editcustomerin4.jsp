@@ -43,6 +43,13 @@
                                 </div>
                                 <div class="col-xs-12 col-lg-12">
                                     <fieldset class="form-group">
+                                        <label>Ward<span>*</span></label>
+                                        <input type="text" class="form-control req" name="address" placeholder="Input your ward" value="">
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-xs-12 col-lg-12">
+                                    <fieldset class="form-group">
                                         <label>Street<span>*</span></label>
                                         <input type="text" class="form-control req" name="address" placeholder="Input your street" value="">
                                     </fieldset>
