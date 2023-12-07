@@ -238,7 +238,7 @@ public class LoginServlet extends HttpServlet {
             else {
                 user = (CustomeraccountEntity) session.getAttribute("user");
                 session.setAttribute("user", user);
-                url = "/CustomerAccount.sp";
+                url = "/CustomerAccount.jsp";
             }
         }
         

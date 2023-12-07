@@ -218,7 +218,7 @@ CREATE TABLE `customeraccount` (
 
 LOCK TABLES `customeraccount` WRITE;
 /*!40000 ALTER TABLE `customeraccount` DISABLE KEYS */;
-INSERT INTO `customeraccount` VALUES (1,'123@gmail.com','123',61.5,1),(2,'phuocchan@gmail.com','123',40,0),(3,'phuocchan2@gmail.com','123',135,1),(5,'qwwwfk@gmail.com','885243',0,0),(6,'rhctqz@gmail.com','287168',0,0),(7,'pfwges@gmail.com','683439',0,0),(8,'ndnzmx@gmail.com','76177',0,0),(9,'vtnqbq@gmail.com','629891',0,0),(10,'ibqsmi@gmail.com','993551',0,0),(11,'ywylvd@gmail.com','242696',0,0);
+INSERT INTO `customeraccount` VALUES (1,'123@gmail.com','123',104.25,1),(2,'phuocchan@gmail.com','123',40,0),(3,'phuocchan2@gmail.com','123',135,1),(5,'qwwwfk@gmail.com','885243',0,0),(6,'rhctqz@gmail.com','287168',0,0),(7,'pfwges@gmail.com','683439',0,0),(8,'ndnzmx@gmail.com','76177',0,0),(9,'vtnqbq@gmail.com','629891',0,0),(10,'ibqsmi@gmail.com','993551',0,0),(11,'ywylvd@gmail.com','242696',0,0);
 /*!40000 ALTER TABLE `customeraccount` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -312,7 +312,7 @@ CREATE TABLE `order_products` (
 
 LOCK TABLES `order_products` WRITE;
 /*!40000 ALTER TABLE `order_products` DISABLE KEYS */;
-INSERT INTO `order_products` VALUES (44,1,20.5,3,61.5,1,3);
+INSERT INTO `order_products` VALUES (44,1,20.5,3,61.5,1,3),(46,5,38,2,76,3,1),(47,1,20.5,2,41,2,1),(47,3,25,1,25,2,3);
 /*!40000 ALTER TABLE `order_products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -372,7 +372,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`order_id`),
   KEY `FK_orders_customer_idx` (`customer_id`),
   CONSTRAINT `FK_orders_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,7 +381,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (44,1,61.5,'2023-11-26 16:32:46',2,0,0,'2023-11-26 17:02:13',1);
+INSERT INTO `orders` VALUES (44,1,61.5,'2023-11-26 16:32:46',2,0,0,'2023-11-26 17:02:13',1),(46,1,72.2,'2023-11-28 18:56:10',0,0.05,1,NULL,0),(47,1,62.7,'2023-12-07 10:04:33',0,0.05,0,NULL,0);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -483,7 +483,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'T-shirt',20.5,6,3,1,NULL,NULL),(2,'Women\'s shirt',27,13,3,1,NULL,NULL),(3,'Men Cargo shirt',25,18,3,1,NULL,NULL),(4,'Cargo Pants 1',40,10,2,2,NULL,NULL),(5,'Cargo Pants 2',38,10,2,2,NULL,NULL),(6,'Cargo Pants 3',45,10,2,2,NULL,NULL);
+INSERT INTO `products` VALUES (1,'T-shirt',20.5,4,3,1,NULL,NULL),(2,'Women\'s shirt',27,13,3,1,NULL,NULL),(3,'Men Cargo shirt',25,17,3,1,NULL,NULL),(4,'Cargo Pants 1',40,10,2,2,NULL,NULL),(5,'Cargo Pants 2',38,12,2,2,NULL,NULL),(6,'Cargo Pants 3',45,13,2,2,NULL,NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -562,6 +562,10 @@ INSERT INTO `style` VALUES (1,'vintage'),(2,'street'),(3,'minimalism');
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'clothesstore'
+--
+
+--
 -- Dumping routines for database 'clothesstore'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `PROC_DeleteBoughtInCart` */;
@@ -619,4 +623,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-26 17:06:28
+-- Dump completed on 2023-12-07 10:13:03
