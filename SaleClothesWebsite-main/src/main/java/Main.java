@@ -1,26 +1,36 @@
-import JPAConfig.JPAConfig;
-import entity.*;
-import org.hibernate.criterion.Order;
+
+import JpaConfig.JpaConfig;
+import Service.*;
+import Service.impl.*;
+import model.*;
+import org.hibernate.Transaction;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManager entityManager = JPAConfig.getEntityManager();
-    
-        // Create a query to retrieve OrderProductsEntity by ID
-        TypedQuery<OrderProductsEntity> query = entityManager.createQuery(
-                "SELECT op FROM OrderProductsEntity op WHERE op.orderId = :id", OrderProductsEntity.class);
-        query.setParameter("id", 40);
-    
-        List<OrderProductsEntity> products = query.getResultList();
-        
-        for (OrderProductsEntity productsEntity : products){
-            System.out.println(productsEntity.getProductId());
-        }
+        OrderService orderService = new OrderServiceImpl();
+        OrderDetailsService orderDetailsService = new OrderDetailServiceImpl();
+        CartItemService cartItemService = new CartItemServiceImpl();
+        EntityManager entityManager = JpaConfig.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        ReviewService reviewService = new ReviewServiceImpl();
+        CategoryService categoryService = new CategoryServiceImpl();
+
+//        CustomerEntity customerEntity = JpaConfig.getEntityManager().find(CustomerEntity.class, 6);
+//        ProductEntity productEntity = JpaConfig.getEntityManager().find(ProductEntity.class, 3);
+//
+//        List<CategoryEntity> categoryEntityList = categoryService.findAllByActivated();
+//        for (CategoryEntity categoryEntity:categoryEntityList){
+//            System.out.println(categoryEntity.getCategoryName());
+//        }
     }
 }

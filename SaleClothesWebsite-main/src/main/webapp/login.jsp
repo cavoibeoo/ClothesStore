@@ -73,7 +73,7 @@
 
                                         <div class="col-12">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                                                <input class="form-check-input" type="checkbox" name="remember" id="rememberMe">
                                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                                             </div>
                                         </div>
@@ -88,6 +88,9 @@
 
                                         <div class="col-12">
                                             <p class="small mb-0">Don't have account? <a href="register.jsp">Create an account</a></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="small mb-0">Forget password? <a href="forgetpass.jsp">Get help</a></p>
                                         </div>
                                     </form>
                                 </form>
